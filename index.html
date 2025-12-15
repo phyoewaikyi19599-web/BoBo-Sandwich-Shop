@@ -62,6 +62,7 @@
         }
         
         input[type="text"],
+        input[type="tel"],
         select {
             width: 100%;
             padding: 12px 15px;
@@ -72,6 +73,7 @@
         }
         
         input[type="text"]:focus,
+        input[type="tel"]:focus,
         select:focus {
             outline: none;
             border-color: #FF6B6B;
@@ -250,6 +252,16 @@
             </div>
             
             <div class="form-group">
+                <label>Phone Number <span class="required">*</span></label>
+                <input type="tel" id="phoneNumber" placeholder="e.g., 087 123 4567" required maxlength="20">
+            </div>
+            
+            <div class="form-group">
+                <label>Delivery Address (Optional)</label>
+                <input type="text" id="address" placeholder="Enter delivery address or leave blank for pickup" maxlength="150">
+            </div>
+            
+            <div class="form-group">
                 <label>Choose Your Sandwich <span class="required">*</span></label>
                 <select id="sandwichType" required>
                     <option value="">-- Select Sandwich --</option>
@@ -319,7 +331,7 @@
                 <textarea id="specialInstructions" placeholder="Any special requests? (e.g., no mayo, extra cheese, toasted...)"></textarea>
             </div>
             
-            <button class="submit-btn" onclick="placeOrder()">🛒 Place Order</button>
+            <button type="button" class="submit-btn" id="placeOrderBtn">🛒 Place Order</button>
             
             <div class="loading" id="loading">
                 <p>⏳ Placing your order...</p>
@@ -332,7 +344,7 @@
             <div class="order-number" id="orderNumber">#001</div>
             <p>We'll start preparing your sandwich right away!</p>
             <p style="margin-top: 10px; font-size: 14px;">Estimated time: 10-15 minutes</p>
-            <button class="new-order-btn" onclick="resetForm()">Place Another Order</button>
+            <button type="button" class="new-order-btn" id="newOrderBtn">Place Another Order</button>
         </div>
     </div>
 
@@ -354,14 +366,16 @@
   measurementId: "G-1C2XBKMZ5B"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
         // Place order function
-        window.placeOrder = async function() {
+        async function placeOrder() {
             // Get form values
             const customerName = document.getElementById('customerName').value.trim();
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const address = document.getElementById('address').value.trim();
             const sandwichType = document.getElementById('sandwichType').value;
             const breadType = document.getElementById('breadType').value;
             const specialInstructions = document.getElementById('specialInstructions').value.trim();
@@ -370,6 +384,12 @@ const analytics = getAnalytics(app);
             if (!customerName) {
                 alert('⚠️ Please enter your name!');
                 document.getElementById('customerName').focus();
+                return;
+            }
+
+            if (!phoneNumber) {
+                alert('⚠️ Please enter your phone number!');
+                document.getElementById('phoneNumber').focus();
                 return;
             }
 
@@ -394,6 +414,7 @@ const analytics = getAnalytics(app);
 
             // Show loading
             document.getElementById('loading').style.display = 'block';
+            document.getElementById('placeOrderBtn').disabled = true;
 
             try {
                 // Generate order number
@@ -403,6 +424,8 @@ const analytics = getAnalytics(app);
                 await addDoc(collection(db, 'orders'), {
                     orderNumber: orderNumber,
                     customerName: customerName,
+                    phoneNumber: phoneNumber,
+                    address: address || 'Pickup in store',
                     sandwichType: sandwichType,
                     breadType: breadType,
                     toppings: toppings,
@@ -414,6 +437,7 @@ const analytics = getAnalytics(app);
 
                 // Hide loading
                 document.getElementById('loading').style.display = 'none';
+                document.getElementById('placeOrderBtn').disabled = false;
 
                 // Show success message
                 document.getElementById('orderForm').style.display = 'none';
@@ -423,14 +447,17 @@ const analytics = getAnalytics(app);
             } catch (error) {
                 console.error('Error placing order:', error);
                 document.getElementById('loading').style.display = 'none';
+                document.getElementById('placeOrderBtn').disabled = false;
                 alert('❌ Error placing order: ' + error.message);
             }
-        };
+        }
 
         // Reset form for new order
-        window.resetForm = function() {
+        function resetForm() {
             // Reset all form fields
             document.getElementById('customerName').value = '';
+            document.getElementById('phoneNumber').value = '';
+            document.getElementById('address').value = '';
             document.getElementById('sandwichType').value = '';
             document.getElementById('breadType').value = '';
             document.getElementById('specialInstructions').value = '';
@@ -443,7 +470,11 @@ const analytics = getAnalytics(app);
             // Show form, hide success message
             document.getElementById('orderForm').style.display = 'block';
             document.getElementById('successMessage').classList.remove('show');
-        };
+        }
+
+        // Add event listeners
+        document.getElementById('placeOrderBtn').addEventListener('click', placeOrder);
+        document.getElementById('newOrderBtn').addEventListener('click', resetForm);
     </script>
 </body>
 </html>
