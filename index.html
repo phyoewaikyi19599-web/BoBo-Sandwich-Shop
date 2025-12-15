@@ -19,7 +19,7 @@
         }
         
         .container {
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
             background: white;
             padding: 40px;
@@ -47,6 +47,16 @@
         
         .order-form {
             margin-top: 30px;
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin: 25px 0 15px 0;
+            font-size: 18px;
+            font-weight: bold;
         }
         
         .form-group {
@@ -79,6 +89,48 @@
             border-color: #FF6B6B;
         }
         
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .radio-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f9f9f9;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .radio-item:hover {
+            background: #f0f0f0;
+            border-color: #FF6B6B;
+        }
+        
+        .radio-item input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .radio-item label {
+            margin: 0;
+            font-weight: normal;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        
+        .radio-item input[type="radio"]:checked + label {
+            font-weight: bold;
+            color: #FF6B6B;
+        }
+        
         .checkbox-group {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -89,7 +141,7 @@
         .checkbox-item {
             display: flex;
             align-items: center;
-            padding: 8px;
+            padding: 10px;
             background: #f9f9f9;
             border-radius: 8px;
             transition: background 0.3s;
@@ -129,14 +181,53 @@
             border-color: #FF6B6B;
         }
         
+        .price-summary {
+            background: #FFF3E0;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 2px solid #FF9800;
+        }
+        
+        .price-summary h3 {
+            color: #FF6B6B;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        
+        .price-label {
+            color: #555;
+        }
+        
+        .price-value {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .total-row {
+            border-top: 2px solid #FF9800;
+            margin-top: 10px;
+            padding-top: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #FF6B6B;
+        }
+        
         .submit-btn {
             width: 100%;
-            padding: 15px;
+            padding: 18px;
             background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 18px;
+            border-radius: 12px;
+            font-size: 20px;
             font-weight: bold;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
@@ -156,8 +247,8 @@
             display: none;
             background: #4CAF50;
             color: white;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 30px;
+            border-radius: 15px;
             text-align: center;
             margin-top: 20px;
             animation: slideIn 0.5s ease;
@@ -168,16 +259,17 @@
         }
         
         .success-message h2 {
-            font-size: 24px;
-            margin-bottom: 10px;
+            font-size: 28px;
+            margin-bottom: 15px;
         }
         
         .success-message p {
             font-size: 16px;
+            margin-bottom: 10px;
         }
         
         .order-number {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: bold;
             margin: 15px 0;
             color: #FFE66D;
@@ -186,13 +278,13 @@
         .new-order-btn {
             background: white;
             color: #4CAF50;
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 15px;
+            margin-top: 20px;
         }
         
         .new-order-btn:hover {
@@ -215,6 +307,7 @@
             text-align: center;
             color: #FF6B6B;
             margin-top: 20px;
+            font-size: 16px;
         }
         
         .required {
@@ -233,6 +326,10 @@
             .checkbox-group {
                 grid-template-columns: 1fr;
             }
+            
+            .radio-group {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -245,6 +342,9 @@
         
         <div class="order-form" id="orderForm">
             <h2 style="color: #333; margin-bottom: 20px;">Place Your Order</h2>
+            
+            <!-- Customer Information -->
+            <div class="section-header">👤 Customer Information</div>
             
             <div class="form-group">
                 <label>Your Name <span class="required">*</span></label>
@@ -261,19 +361,36 @@
                 <input type="text" id="address" placeholder="Enter delivery address or leave blank for pickup" maxlength="150">
             </div>
             
+            <!-- Sandwich Selection -->
+            <div class="section-header">🥪 Build Your Sandwich</div>
+            
             <div class="form-group">
                 <label>Choose Your Sandwich <span class="required">*</span></label>
-                <select id="sandwichType" required>
-                    <option value="">-- Select Sandwich --</option>
-                    <option value="Classic Club">🥖 Classic Club - €6.50</option>
-                    <option value="Turkey Delight">🦃 Turkey Delight - €7.00</option>
-                    <option value="Veggie Supreme">🥗 Veggie Supreme - €6.00</option>
-                    <option value="Chicken Caesar">🐔 Chicken Caesar - €7.50</option>
-                    <option value="Tuna Melt">🐟 Tuna Melt - €6.50</option>
-                    <option value="BLT Special">🥓 BLT Special - €6.50</option>
-                    <option value="Italian BMT">🇮🇹 Italian BMT - €7.50</option>
-                    <option value="Steak & Cheese">🥩 Steak & Cheese - €8.00</option>
+                <select id="sandwichType" required onchange="calculateTotal()">
+                    <option value="" data-price="0">-- Select Sandwich --</option>
+                    <option value="Classic Club" data-price="6.50">🥖 Classic Club - €6.50</option>
+                    <option value="Turkey Delight" data-price="7.00">🦃 Turkey Delight - €7.00</option>
+                    <option value="Veggie Supreme" data-price="6.00">🥗 Veggie Supreme - €6.00</option>
+                    <option value="Chicken Caesar" data-price="7.50">🐔 Chicken Caesar - €7.50</option>
+                    <option value="Tuna Melt" data-price="6.50">🐟 Tuna Melt - €6.50</option>
+                    <option value="BLT Special" data-price="6.50">🥓 BLT Special - €6.50</option>
+                    <option value="Italian BMT" data-price="7.50">🇮🇹 Italian BMT - €7.50</option>
+                    <option value="Steak & Cheese" data-price="8.00">🥩 Steak & Cheese - €8.00</option>
                 </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Choose Size <span class="required">*</span></label>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" id="size6" name="sandwichSize" value="6 inch" data-price="0" checked onchange="calculateTotal()">
+                        <label for="size6">6 inch (Standard)</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="sizeFootlong" name="sandwichSize" value="Footlong" data-price="3.50" onchange="calculateTotal()">
+                        <label for="sizeFootlong">Footlong (+€3.50)</label>
+                    </div>
+                </div>
             </div>
             
             <div class="form-group">
@@ -285,11 +402,12 @@
                     <option value="Multigrain">Multigrain</option>
                     <option value="Wrap">Tortilla Wrap</option>
                     <option value="Ciabatta">Ciabatta Roll</option>
+                    <option value="Italian">Italian Herbs & Cheese</option>
                 </select>
             </div>
             
             <div class="form-group">
-                <label>Select Toppings (Optional)</label>
+                <label>Select Toppings (Optional - Free)</label>
                 <div class="checkbox-group">
                     <div class="checkbox-item">
                         <input type="checkbox" id="lettuce" value="Lettuce">
@@ -327,8 +445,132 @@
             </div>
             
             <div class="form-group">
+                <label>Choose Sauces (Optional - Free)</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="sauceBBQ" value="BBQ Sauce">
+                        <label for="sauceBBQ">🍖 BBQ</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="sauceSouthwest" value="Southwest">
+                        <label for="sauceSouthwest">🌶️ Southwest</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="sauceMayo" value="Mayo">
+                        <label for="sauceMayo">🥚 Mayo</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="sauceGarlic" value="Garlic Herb">
+                        <label for="sauceGarlic">🧄 Garlic Herb</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="sauceKetchup" value="Ketchup">
+                        <label for="sauceKetchup">🍅 Ketchup</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="sauceSpicy" value="Spicy Sauce">
+                        <label for="sauceSpicy">🔥 Spicy Sauce</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Drinks -->
+            <div class="section-header">🥤 Drinks</div>
+            
+            <div class="form-group">
+                <label>Select Drink (Optional)</label>
+                <select id="drinkType" onchange="calculateTotal()">
+                    <option value="" data-price="0">-- No Drink --</option>
+                    <option value="Coca Cola" data-price="2.50">🥤 Coca Cola - €2.50</option>
+                    <option value="Fanta" data-price="2.50">🍊 Fanta - €2.50</option>
+                    <option value="Sprite" data-price="2.50">🍋 Sprite - €2.50</option>
+                    <option value="Pepsi" data-price="2.50">🥤 Pepsi - €2.50</option>
+                    <option value="Oasis" data-price="2.50">🍹 Oasis - €2.50</option>
+                    <option value="Water" data-price="1.50">💧 Water - €1.50</option>
+                    <option value="Orange Juice" data-price="3.00">🍊 Orange Juice - €3.00</option>
+                </select>
+            </div>
+            
+            <!-- Sides -->
+            <div class="section-header">🍪 Sides & Extras</div>
+            
+            <div class="form-group">
+                <label>Cookies (Optional)</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cookieChoc" value="Chocolate Cookie" data-price="1.50" onchange="calculateTotal()">
+                        <label for="cookieChoc">🍪 Chocolate - €1.50</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cookieDouble" value="Double Chocolate Cookie" data-price="1.80" onchange="calculateTotal()">
+                        <label for="cookieDouble">🍫 Double Choc - €1.80</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cookieWhite" value="White Chocolate Cookie" data-price="1.80" onchange="calculateTotal()">
+                        <label for="cookieWhite">⚪ White Choc - €1.80</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cookieRainbow" value="Rainbow Cookie" data-price="2.00" onchange="calculateTotal()">
+                        <label for="cookieRainbow">🌈 Rainbow - €2.00</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Hot Sides (Optional)</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="sideHashbrown" value="Hash Brown" data-price="2.50" onchange="calculateTotal()">
+                        <label for="sideHashbrown">🥔 Hash Brown - €2.50</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="sideFries" value="Waffle Fries" data-price="3.00" onchange="calculateTotal()">
+                        <label for="sideFries">🍟 Waffle Fries - €3.00</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="slideGarlic" value="Garlic Cheese Slide" data-price="3.50" onchange="calculateTotal()">
+                        <label for="slideGarlic">🧀 Garlic Cheese - €3.50</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="slidePepperoni" value="Pepperoni Slide" data-price="3.50" onchange="calculateTotal()">
+                        <label for="slidePepperoni">🍕 Pepperoni - €3.50</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Special Instructions -->
+            <div class="form-group">
                 <label>Special Instructions (Optional)</label>
                 <textarea id="specialInstructions" placeholder="Any special requests? (e.g., no mayo, extra cheese, toasted...)"></textarea>
+            </div>
+            
+            <!-- Price Summary -->
+            <div class="price-summary">
+                <h3>💰 Order Summary</h3>
+                <div class="price-row">
+                    <span class="price-label">Sandwich:</span>
+                    <span class="price-value" id="priceSandwich">€0.00</span>
+                </div>
+                <div class="price-row">
+                    <span class="price-label">Size Upgrade:</span>
+                    <span class="price-value" id="priceSize">€0.00</span>
+                </div>
+                <div class="price-row">
+                    <span class="price-label">Drink:</span>
+                    <span class="price-value" id="priceDrink">€0.00</span>
+                </div>
+                <div class="price-row">
+                    <span class="price-label">Cookies:</span>
+                    <span class="price-value" id="priceCookies">€0.00</span>
+                </div>
+                <div class="price-row">
+                    <span class="price-label">Hot Sides:</span>
+                    <span class="price-value" id="priceSides">€0.00</span>
+                </div>
+                <div class="price-row total-row">
+                    <span class="price-label">TOTAL:</span>
+                    <span class="price-value" id="priceTotal">€0.00</span>
+                </div>
             </div>
             
             <button type="button" class="submit-btn" id="placeOrderBtn">🛒 Place Order</button>
@@ -342,8 +584,9 @@
             <h2>✅ Order Placed Successfully!</h2>
             <p>Your order number is:</p>
             <div class="order-number" id="orderNumber">#001</div>
-            <p>We'll start preparing your sandwich right away!</p>
-            <p style="margin-top: 10px; font-size: 14px;">Estimated time: 10-15 minutes</p>
+            <p>Total: <span id="finalTotal">€0.00</span></p>
+            <p style="margin-top: 10px;">We'll start preparing your order right away!</p>
+            <p style="font-size: 14px;">Estimated time: 10-15 minutes</p>
             <button type="button" class="new-order-btn" id="newOrderBtn">Place Another Order</button>
         </div>
     </div>
@@ -357,7 +600,7 @@
         // Firebase Configuration
         // TODO: Replace with YOUR Firebase config
         const firebaseConfig = {
-            apiKey: "AIzaSyCzVGmXLNfU4_jVV9kooB_l2jSh4bKzZE0",
+             apiKey: "AIzaSyCzVGmXLNfU4_jVV9kooB_l2jSh4bKzZE0",
   authDomain: "bobo-sandwich.firebaseapp.com",
   projectId: "bobo-sandwich",
   storageBucket: "bobo-sandwich.firebasestorage.app",
@@ -370,6 +613,52 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // Calculate total price
+        window.calculateTotal = function() {
+            let total = 0;
+
+            // Sandwich price
+            const sandwich = document.getElementById('sandwichType');
+            const sandwichPrice = parseFloat(sandwich.options[sandwich.selectedIndex]?.dataset.price || 0);
+            total += sandwichPrice;
+            document.getElementById('priceSandwich').textContent = '€' + sandwichPrice.toFixed(2);
+
+            // Size upgrade
+            const sizeRadio = document.querySelector('input[name="sandwichSize"]:checked');
+            const sizePrice = parseFloat(sizeRadio?.dataset.price || 0);
+            total += sizePrice;
+            document.getElementById('priceSize').textContent = '€' + sizePrice.toFixed(2);
+
+            // Drink
+            const drink = document.getElementById('drinkType');
+            const drinkPrice = parseFloat(drink.options[drink.selectedIndex]?.dataset.price || 0);
+            total += drinkPrice;
+            document.getElementById('priceDrink').textContent = '€' + drinkPrice.toFixed(2);
+
+            // Cookies
+            let cookiesTotal = 0;
+            document.querySelectorAll('#cookieChoc, #cookieDouble, #cookieWhite, #cookieRainbow').forEach(checkbox => {
+                if (checkbox.checked) {
+                    cookiesTotal += parseFloat(checkbox.dataset.price);
+                }
+            });
+            total += cookiesTotal;
+            document.getElementById('priceCookies').textContent = '€' + cookiesTotal.toFixed(2);
+
+            // Hot Sides
+            let sidesTotal = 0;
+            document.querySelectorAll('#sideHashbrown, #sideFries, #slideGarlic, #slidePepperoni').forEach(checkbox => {
+                if (checkbox.checked) {
+                    sidesTotal += parseFloat(checkbox.dataset.price);
+                }
+            });
+            total += sidesTotal;
+            document.getElementById('priceSides').textContent = '€' + sidesTotal.toFixed(2);
+
+            // Total
+            document.getElementById('priceTotal').textContent = '€' + total.toFixed(2);
+        };
+
         // Place order function
         async function placeOrder() {
             // Get form values
@@ -377,6 +666,7 @@
             const phoneNumber = document.getElementById('phoneNumber').value.trim();
             const address = document.getElementById('address').value.trim();
             const sandwichType = document.getElementById('sandwichType').value;
+            const sandwichSize = document.querySelector('input[name="sandwichSize"]:checked').value;
             const breadType = document.getElementById('breadType').value;
             const specialInstructions = document.getElementById('specialInstructions').value.trim();
 
@@ -407,10 +697,33 @@
 
             // Get selected toppings
             const toppings = [];
-            const checkboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked');
-            checkboxes.forEach(checkbox => {
-                toppings.push(checkbox.value);
+            document.querySelectorAll('#lettuce, #tomato, #onion, #cucumber, #peppers, #olives, #pickles, #cheese').forEach(checkbox => {
+                if (checkbox.checked) toppings.push(checkbox.value);
             });
+
+            // Get selected sauces
+            const sauces = [];
+            document.querySelectorAll('#sauceBBQ, #sauceSouthwest, #sauceMayo, #sauceGarlic, #sauceKetchup, #sauceSpicy').forEach(checkbox => {
+                if (checkbox.checked) sauces.push(checkbox.value);
+            });
+
+            // Get drink
+            const drinkType = document.getElementById('drinkType').value || 'None';
+
+            // Get cookies
+            const cookies = [];
+            document.querySelectorAll('#cookieChoc, #cookieDouble, #cookieWhite, #cookieRainbow').forEach(checkbox => {
+                if (checkbox.checked) cookies.push(checkbox.value);
+            });
+
+            // Get hot sides
+            const hotSides = [];
+            document.querySelectorAll('#sideHashbrown, #sideFries, #slideGarlic, #slidePepperoni').forEach(checkbox => {
+                if (checkbox.checked) hotSides.push(checkbox.value);
+            });
+
+            // Get total price
+            const totalPrice = document.getElementById('priceTotal').textContent;
 
             // Show loading
             document.getElementById('loading').style.display = 'block';
@@ -427,9 +740,15 @@
                     phoneNumber: phoneNumber,
                     address: address || 'Pickup in store',
                     sandwichType: sandwichType,
+                    sandwichSize: sandwichSize,
                     breadType: breadType,
                     toppings: toppings,
+                    sauces: sauces,
+                    drink: drinkType,
+                    cookies: cookies,
+                    hotSides: hotSides,
                     specialInstructions: specialInstructions || 'None',
+                    totalPrice: totalPrice,
                     status: 'New',
                     createdAt: serverTimestamp(),
                     updatedAt: serverTimestamp()
@@ -443,6 +762,7 @@
                 document.getElementById('orderForm').style.display = 'none';
                 document.getElementById('successMessage').classList.add('show');
                 document.getElementById('orderNumber').textContent = orderNumber;
+                document.getElementById('finalTotal').textContent = totalPrice;
 
             } catch (error) {
                 console.error('Error placing order:', error);
@@ -460,12 +780,19 @@
             document.getElementById('address').value = '';
             document.getElementById('sandwichType').value = '';
             document.getElementById('breadType').value = '';
+            document.getElementById('drinkType').value = '';
             document.getElementById('specialInstructions').value = '';
             
-            // Uncheck all toppings
-            document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(checkbox => {
+            // Reset size to 6 inch
+            document.getElementById('size6').checked = true;
+            
+            // Uncheck all checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
                 checkbox.checked = false;
             });
+
+            // Reset price
+            calculateTotal();
 
             // Show form, hide success message
             document.getElementById('orderForm').style.display = 'block';
@@ -475,6 +802,9 @@
         // Add event listeners
         document.getElementById('placeOrderBtn').addEventListener('click', placeOrder);
         document.getElementById('newOrderBtn').addEventListener('click', resetForm);
+
+        // Initialize price on load
+        calculateTotal();
     </script>
 </body>
 </html>
