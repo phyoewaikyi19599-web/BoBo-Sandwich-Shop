@@ -19,7 +19,7 @@
         }
         
         .container {
-            max-width: 700px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             padding: 40px;
@@ -41,65 +41,194 @@
         
         .logo p {
             color: #666;
-            font-size: 16px;
+            font-size: 18px;
             font-style: italic;
         }
         
-        .order-form {
-            margin-top: 30px;
+        .steps-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            gap: 20px;
         }
         
-        .section-header {
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: #f0f0f0;
+            border-radius: 25px;
+            font-weight: 500;
+            color: #999;
+        }
+        
+        .step.active {
             background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
             color: white;
-            padding: 12px 20px;
-            border-radius: 10px;
-            margin: 25px 0 15px 0;
-            font-size: 18px;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: white;
+            color: #FF6B6B;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: bold;
         }
         
-        .form-group {
-            margin-bottom: 25px;
+        .step.active .step-number {
+            background: white;
+            color: #FF6B6B;
         }
         
-        label {
+        .order-section {
+            display: none;
+        }
+        
+        .order-section.active {
             display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-title {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .product-card {
+            background: #f9f9f9;
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: #FF6B6B;
+        }
+        
+        .product-card.selected {
+            border-color: #FF6B6B;
+            background: #fff0f0;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .product-name {
+            font-size: 20px;
             font-weight: bold;
             color: #333;
             margin-bottom: 8px;
-            font-size: 16px;
         }
         
-        input[type="text"],
-        input[type="tel"],
-        select {
-            width: 100%;
-            padding: 12px 15px;
-            font-size: 16px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            transition: border 0.3s;
+        .product-price {
+            font-size: 24px;
+            color: #FF6B6B;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
         
-        input[type="text"]:focus,
-        input[type="tel"]:focus,
-        select:focus {
-            outline: none;
-            border-color: #FF6B6B;
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .qty-btn {
+            width: 35px;
+            height: 35px;
+            border: 2px solid #FF6B6B;
+            background: white;
+            color: #FF6B6B;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .qty-btn:hover {
+            background: #FF6B6B;
+            color: white;
+        }
+        
+        .qty-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .selected-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #4CAF50;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .options-section {
+            margin-bottom: 30px;
+        }
+        
+        .options-title {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
         
         .radio-group {
             display: flex;
             gap: 15px;
-            margin-top: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
         }
         
         .radio-item {
             flex: 1;
+            min-width: 150px;
             display: flex;
             align-items: center;
-            padding: 12px;
+            padding: 15px;
             background: #f9f9f9;
             border: 2px solid #ddd;
             border-radius: 10px;
@@ -119,13 +248,6 @@
             cursor: pointer;
         }
         
-        .radio-item label {
-            margin: 0;
-            font-weight: normal;
-            cursor: pointer;
-            font-size: 15px;
-        }
-        
         .radio-item input[type="radio"]:checked + label {
             font-weight: bold;
             color: #FF6B6B;
@@ -133,17 +255,16 @@
         
         .checkbox-group {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-top: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
         }
         
         .checkbox-item {
             display: flex;
             align-items: center;
-            padding: 10px;
+            padding: 12px;
             background: #f9f9f9;
-            border-radius: 8px;
+            border-radius: 10px;
             transition: background 0.3s;
         }
         
@@ -152,54 +273,51 @@
         }
         
         .checkbox-item input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            margin-right: 8px;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
             cursor: pointer;
         }
         
         .checkbox-item label {
-            margin: 0;
-            font-weight: normal;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 15px;
         }
         
-        textarea {
+        select, input[type="text"], input[type="tel"], textarea {
             width: 100%;
-            padding: 12px 15px;
+            padding: 15px;
             font-size: 16px;
             border: 2px solid #ddd;
             border-radius: 10px;
             font-family: inherit;
-            resize: vertical;
-            min-height: 80px;
+            margin-bottom: 20px;
         }
         
-        textarea:focus {
+        select:focus, input:focus, textarea:focus {
             outline: none;
             border-color: #FF6B6B;
         }
         
         .price-summary {
             background: #FFF3E0;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 25px 0;
-            border: 2px solid #FF9800;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 3px solid #FF9800;
         }
         
         .price-summary h3 {
             color: #FF6B6B;
-            margin-bottom: 15px;
-            font-size: 20px;
+            margin-bottom: 20px;
+            font-size: 24px;
         }
         
         .price-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 15px;
+            margin-bottom: 12px;
+            font-size: 16px;
         }
         
         .price-label {
@@ -212,109 +330,92 @@
         }
         
         .total-row {
-            border-top: 2px solid #FF9800;
-            margin-top: 10px;
-            padding-top: 10px;
-            font-size: 20px;
+            border-top: 3px solid #FF9800;
+            margin-top: 15px;
+            padding-top: 15px;
+            font-size: 24px;
             font-weight: bold;
             color: #FF6B6B;
         }
         
-        .submit-btn {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 10px;
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
         }
         
-        .submit-btn:hover {
+        .nav-btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-back {
+            background: #ccc;
+            color: #333;
+        }
+        
+        .btn-back:hover {
+            background: #bbb;
+        }
+        
+        .btn-next {
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: white;
+        }
+        
+        .btn-next:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
         }
         
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-        
         .success-message {
             display: none;
-            background: #4CAF50;
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
             text-align: center;
-            margin-top: 20px;
-            animation: slideIn 0.5s ease;
+            padding: 40px;
         }
         
         .success-message.show {
             display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
         }
         
         .success-message h2 {
-            font-size: 28px;
-            margin-bottom: 15px;
-        }
-        
-        .success-message p {
-            font-size: 16px;
-            margin-bottom: 10px;
+            font-size: 32px;
+            color: #4CAF50;
+            margin-bottom: 20px;
         }
         
         .order-number {
-            font-size: 36px;
+            font-size: 40px;
             font-weight: bold;
-            margin: 15px 0;
-            color: #FFE66D;
+            color: #FF6B6B;
+            margin: 20px 0;
         }
         
         .new-order-btn {
-            background: white;
-            color: #4CAF50;
-            padding: 12px 25px;
+            margin-top: 30px;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: white;
             border: none;
             border-radius: 10px;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
         }
         
-        .new-order-btn:hover {
-            background: #f0f0f0;
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .loading {
-            display: none;
-            text-align: center;
-            color: #FF6B6B;
-            margin-top: 20px;
-            font-size: 16px;
-        }
-        
-        .required {
-            color: #FF6B6B;
-        }
-        
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .container {
                 padding: 25px;
             }
@@ -323,12 +424,12 @@
                 font-size: 36px;
             }
             
-            .checkbox-group {
+            .product-grid {
                 grid-template-columns: 1fr;
             }
             
-            .radio-group {
-                flex-direction: column;
+            .steps-indicator {
+                flex-wrap: wrap;
             }
         }
     </style>
@@ -340,254 +441,245 @@
             <p>Fresh. Fast. Delicious.</p>
         </div>
         
-        <div class="order-form" id="orderForm">
-            <h2 style="color: #333; margin-bottom: 20px;">Place Your Order</h2>
-            
-            <!-- Customer Information -->
-            <div class="section-header">👤 Customer Information</div>
-            
-            <div class="form-group">
-                <label>Your Name <span class="required">*</span></label>
-                <input type="text" id="customerName" placeholder="Enter your name" required maxlength="50">
+        <!-- Steps Indicator -->
+        <div class="steps-indicator">
+            <div class="step active" id="step1Indicator">
+                <span class="step-number">1</span>
+                <span>Sandwiches</span>
             </div>
-            
-            <div class="form-group">
-                <label>Phone Number <span class="required">*</span></label>
-                <input type="tel" id="phoneNumber" placeholder="e.g., 087 123 4567" required maxlength="20">
+            <div class="step" id="step2Indicator">
+                <span class="step-number">2</span>
+                <span>Drinks</span>
             </div>
-            
-            <div class="form-group">
-                <label>Delivery Address (Optional)</label>
-                <input type="text" id="address" placeholder="Enter delivery address or leave blank for pickup" maxlength="150">
+            <div class="step" id="step3Indicator">
+                <span class="step-number">3</span>
+                <span>Sides & Extras</span>
             </div>
-            
-            <!-- Sandwich Selection -->
-            <div class="section-header">🥪 Build Your Sandwich</div>
-            
-            <div class="form-group">
-                <label>Choose Your Sandwich <span class="required">*</span></label>
-                <select id="sandwichType" required onchange="calculateTotal()">
-                    <option value="" data-price="0">-- Select Sandwich --</option>
-                    <option value="Classic Club" data-price="6.50">🥖 Classic Club - €6.50</option>
-                    <option value="Turkey Delight" data-price="7.00">🦃 Turkey Delight - €7.00</option>
-                    <option value="Veggie Supreme" data-price="6.00">🥗 Veggie Supreme - €6.00</option>
-                    <option value="Chicken Caesar" data-price="7.50">🐔 Chicken Caesar - €7.50</option>
-                    <option value="Tuna Melt" data-price="6.50">🐟 Tuna Melt - €6.50</option>
-                    <option value="BLT Special" data-price="6.50">🥓 BLT Special - €6.50</option>
-                    <option value="Italian BMT" data-price="7.50">🇮🇹 Italian BMT - €7.50</option>
-                    <option value="Steak & Cheese" data-price="8.00">🥩 Steak & Cheese - €8.00</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label>Choose Size <span class="required">*</span></label>
-                <div class="radio-group">
-                    <div class="radio-item">
-                        <input type="radio" id="size6" name="sandwichSize" value="6 inch" data-price="0" checked onchange="calculateTotal()">
-                        <label for="size6">6 inch (Standard)</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="sizeFootlong" name="sandwichSize" value="Footlong" data-price="3.50" onchange="calculateTotal()">
-                        <label for="sizeFootlong">Footlong (+€3.50)</label>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label>Choose Your Bread <span class="required">*</span></label>
-                <select id="breadType" required>
-                    <option value="">-- Select Bread --</option>
-                    <option value="White">White Bread</option>
-                    <option value="Wheat">Wheat Bread</option>
-                    <option value="Multigrain">Multigrain</option>
-                    <option value="Wrap">Tortilla Wrap</option>
-                    <option value="Ciabatta">Ciabatta Roll</option>
-                    <option value="Italian">Italian Herbs & Cheese</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label>Select Toppings (Optional - Free)</label>
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="lettuce" value="Lettuce">
-                        <label for="lettuce">🥬 Lettuce</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="tomato" value="Tomato">
-                        <label for="tomato">🍅 Tomato</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="onion" value="Onion">
-                        <label for="onion">🧅 Onion</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="cucumber" value="Cucumber">
-                        <label for="cucumber">🥒 Cucumber</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="peppers" value="Peppers">
-                        <label for="peppers">🫑 Peppers</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="olives" value="Olives">
-                        <label for="olives">🫒 Olives</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="pickles" value="Pickles">
-                        <label for="pickles">🥒 Pickles</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="cheese" value="Cheese">
-                        <label for="cheese">🧀 Cheese</label>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label>Choose Sauces (Optional - Free)</label>
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="sauceBBQ" value="BBQ Sauce">
-                        <label for="sauceBBQ">🍖 BBQ</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="sauceSouthwest" value="Southwest">
-                        <label for="sauceSouthwest">🌶️ Southwest</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="sauceMayo" value="Mayo">
-                        <label for="sauceMayo">🥚 Mayo</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="sauceGarlic" value="Garlic Herb">
-                        <label for="sauceGarlic">🧄 Garlic Herb</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="sauceKetchup" value="Ketchup">
-                        <label for="sauceKetchup">🍅 Ketchup</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="sauceSpicy" value="Spicy Sauce">
-                        <label for="sauceSpicy">🔥 Spicy Sauce</label>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Drinks -->
-            <div class="section-header">🥤 Drinks</div>
-            
-            <div class="form-group">
-                <label>Select Drink (Optional)</label>
-                <select id="drinkType" onchange="calculateTotal()">
-                    <option value="" data-price="0">-- No Drink --</option>
-                    <option value="Coca Cola" data-price="2.50">🥤 Coca Cola - €2.50</option>
-                    <option value="Fanta" data-price="2.50">🍊 Fanta - €2.50</option>
-                    <option value="Sprite" data-price="2.50">🍋 Sprite - €2.50</option>
-                    <option value="Pepsi" data-price="2.50">🥤 Pepsi - €2.50</option>
-                    <option value="Oasis" data-price="2.50">🍹 Oasis - €2.50</option>
-                    <option value="Water" data-price="1.50">💧 Water - €1.50</option>
-                    <option value="Orange Juice" data-price="3.00">🍊 Orange Juice - €3.00</option>
-                </select>
-            </div>
-            
-            <!-- Sides -->
-            <div class="section-header">🍪 Sides & Extras</div>
-            
-            <div class="form-group">
-                <label>Cookies (Optional)</label>
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="cookieChoc" value="Chocolate Cookie" data-price="1.50" onchange="calculateTotal()">
-                        <label for="cookieChoc">🍪 Chocolate - €1.50</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="cookieDouble" value="Double Chocolate Cookie" data-price="1.80" onchange="calculateTotal()">
-                        <label for="cookieDouble">🍫 Double Choc - €1.80</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="cookieWhite" value="White Chocolate Cookie" data-price="1.80" onchange="calculateTotal()">
-                        <label for="cookieWhite">⚪ White Choc - €1.80</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="cookieRainbow" value="Rainbow Cookie" data-price="2.00" onchange="calculateTotal()">
-                        <label for="cookieRainbow">🌈 Rainbow - €2.00</label>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label>Hot Sides (Optional)</label>
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="sideHashbrown" value="Hash Brown" data-price="2.50" onchange="calculateTotal()">
-                        <label for="sideHashbrown">🥔 Hash Brown - €2.50</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="sideFries" value="Waffle Fries" data-price="3.00" onchange="calculateTotal()">
-                        <label for="sideFries">🍟 Waffle Fries - €3.00</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="slideGarlic" value="Garlic Cheese Slide" data-price="3.50" onchange="calculateTotal()">
-                        <label for="slideGarlic">🧀 Garlic Cheese - €3.50</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="slidePepperoni" value="Pepperoni Slide" data-price="3.50" onchange="calculateTotal()">
-                        <label for="slidePepperoni">🍕 Pepperoni - €3.50</label>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Special Instructions -->
-            <div class="form-group">
-                <label>Special Instructions (Optional)</label>
-                <textarea id="specialInstructions" placeholder="Any special requests? (e.g., no mayo, extra cheese, toasted...)"></textarea>
-            </div>
-            
-            <!-- Price Summary -->
-            <div class="price-summary">
-                <h3>💰 Order Summary</h3>
-                <div class="price-row">
-                    <span class="price-label">Sandwich:</span>
-                    <span class="price-value" id="priceSandwich">€0.00</span>
-                </div>
-                <div class="price-row">
-                    <span class="price-label">Size Upgrade:</span>
-                    <span class="price-value" id="priceSize">€0.00</span>
-                </div>
-                <div class="price-row">
-                    <span class="price-label">Drink:</span>
-                    <span class="price-value" id="priceDrink">€0.00</span>
-                </div>
-                <div class="price-row">
-                    <span class="price-label">Cookies:</span>
-                    <span class="price-value" id="priceCookies">€0.00</span>
-                </div>
-                <div class="price-row">
-                    <span class="price-label">Hot Sides:</span>
-                    <span class="price-value" id="priceSides">€0.00</span>
-                </div>
-                <div class="price-row total-row">
-                    <span class="price-label">TOTAL:</span>
-                    <span class="price-value" id="priceTotal">€0.00</span>
-                </div>
-            </div>
-            
-            <button type="button" class="submit-btn" id="placeOrderBtn">🛒 Place Order</button>
-            
-            <div class="loading" id="loading">
-                <p>⏳ Placing your order...</p>
+            <div class="step" id="step4Indicator">
+                <span class="step-number">4</span>
+                <span>Confirm Order</span>
             </div>
         </div>
         
+        <div id="orderForm">
+            <!-- Step 1: Sandwiches -->
+            <div class="order-section active" id="step1">
+                <h2 class="section-title">🥪 Choose Your Sandwiches</h2>
+                <div class="product-grid" id="sandwichGrid">
+                    <!-- Sandwiches will be added here by JavaScript -->
+                </div>
+                <div class="nav-buttons">
+                    <button class="nav-btn btn-next" onclick="goToStep(2)">Next: Drinks →</button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Drinks -->
+            <div class="order-section" id="step2">
+                <h2 class="section-title">🥤 Choose Your Drinks</h2>
+                <div class="product-grid" id="drinksGrid">
+                    <!-- Drinks will be added here by JavaScript -->
+                </div>
+                <div class="nav-buttons">
+                    <button class="nav-btn btn-back" onclick="goToStep(1)">← Back</button>
+                    <button class="nav-btn btn-next" onclick="goToStep(3)">Next: Sides & Extras →</button>
+                </div>
+            </div>
+            
+            <!-- Step 3: Sides & Extras -->
+            <div class="order-section" id="step3">
+                <h2 class="section-title">🍪 Sides & Extras</h2>
+                
+                <div class="options-section">
+                    <h3 class="options-title">Choose Size</h3>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="size6" name="sandwichSize" value="6 inch" data-price="0" checked onchange="calculateTotal()">
+                            <label for="size6">6 inch (Standard)</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="sizeFootlong" name="sandwichSize" value="Footlong" data-price="3.50" onchange="calculateTotal()">
+                            <label for="sizeFootlong">Footlong (+€3.50)</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="options-section">
+                    <h3 class="options-title">Choose Your Bread</h3>
+                    <select id="breadType" required>
+                        <option value="">-- Select Bread --</option>
+                        <option value="White">White Bread</option>
+                        <option value="Wheat">Wheat Bread</option>
+                        <option value="Multigrain">Multigrain</option>
+                        <option value="Wrap">Tortilla Wrap</option>
+                        <option value="Ciabatta">Ciabatta Roll</option>
+                        <option value="Italian">Italian Herbs & Cheese</option>
+                    </select>
+                </div>
+                
+                <div class="options-section">
+                    <h3 class="options-title">Toppings (Free)</h3>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="lettuce" value="Lettuce">
+                            <label for="lettuce">🥬 Lettuce</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="tomato" value="Tomato">
+                            <label for="tomato">🍅 Tomato</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="onion" value="Onion">
+                            <label for="onion">🧅 Onion</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cucumber" value="Cucumber">
+                            <label for="cucumber">🥒 Cucumber</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="peppers" value="Peppers">
+                            <label for="peppers">🫑 Peppers</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="olives" value="Olives">
+                            <label for="olives">🫒 Olives</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="pickles" value="Pickles">
+                            <label for="pickles">🥒 Pickles</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cheese" value="Cheese">
+                            <label for="cheese">🧀 Cheese</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="options-section">
+                    <h3 class="options-title">Sauces (Free)</h3>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sauceBBQ" value="BBQ Sauce">
+                            <label for="sauceBBQ">🍖 BBQ</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sauceSouthwest" value="Southwest">
+                            <label for="sauceSouthwest">🌶️ Southwest</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sauceMayo" value="Mayo">
+                            <label for="sauceMayo">🥚 Mayo</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sauceGarlic" value="Garlic Herb">
+                            <label for="sauceGarlic">🧄 Garlic Herb</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sauceKetchup" value="Ketchup">
+                            <label for="sauceKetchup">🍅 Ketchup</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sauceSpicy" value="Spicy Sauce">
+                            <label for="sauceSpicy">🔥 Spicy Sauce</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="options-section">
+                    <h3 class="options-title">Cookies</h3>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cookieChoc" value="Chocolate Cookie" data-price="1.50" onchange="calculateTotal()">
+                            <label for="cookieChoc">🍪 Chocolate - €1.50</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cookieDouble" value="Double Chocolate Cookie" data-price="1.80" onchange="calculateTotal()">
+                            <label for="cookieDouble">🍫 Double Choc - €1.80</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cookieWhite" value="White Chocolate Cookie" data-price="1.80" onchange="calculateTotal()">
+                            <label for="cookieWhite">⚪ White Choc - €1.80</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cookieRainbow" value="Rainbow Cookie" data-price="2.00" onchange="calculateTotal()">
+                            <label for="cookieRainbow">🌈 Rainbow - €2.00</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="options-section">
+                    <h3 class="options-title">Hot Sides</h3>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sideHashbrown" value="Hash Brown" data-price="2.50" onchange="calculateTotal()">
+                            <label for="sideHashbrown">🥔 Hash Brown - €2.50</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sideFries" value="Waffle Fries" data-price="3.00" onchange="calculateTotal()">
+                            <label for="sideFries">🍟 Waffle Fries - €3.00</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="slideGarlic" value="Garlic Cheese Slide" data-price="3.50" onchange="calculateTotal()">
+                            <label for="slideGarlic">🧀 Garlic Cheese - €3.50</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="slidePepperoni" value="Pepperoni Slide" data-price="3.50" onchange="calculateTotal()">
+                            <label for="slidePepperoni">🍕 Pepperoni - €3.50</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nav-buttons">
+                    <button class="nav-btn btn-back" onclick="goToStep(2)">← Back</button>
+                    <button class="nav-btn btn-next" onclick="goToStep(4)">Next: Confirm Order →</button>
+                </div>
+            </div>
+            
+            <!-- Step 4: Confirm Order -->
+            <div class="order-section" id="step4">
+                <h2 class="section-title">✅ Confirm Your Order</h2>
+                
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <h3 style="color: #333; margin-bottom: 20px;">Your Information</h3>
+                    
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Your Name *</label>
+                    <input type="text" id="customerName" placeholder="Enter your name" required>
+                    
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Phone Number *</label>
+                    <input type="tel" id="phoneNumber" placeholder="e.g., 087 123 4567" required>
+                    
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Delivery Address (Optional)</label>
+                    <input type="text" id="address" placeholder="Enter delivery address or leave blank for pickup">
+                    
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Special Instructions (Optional)</label>
+                    <textarea id="specialInstructions" placeholder="Any special requests?"></textarea>
+                    
+                    <div class="price-summary">
+                        <h3>💰 Order Summary</h3>
+                        <div id="orderSummaryDetails"></div>
+                        <div class="price-row total-row">
+                            <span class="price-label">TOTAL:</span>
+                            <span class="price-value" id="priceTotal">€0.00</span>
+                        </div>
+                    </div>
+                    
+                    <div class="nav-buttons">
+                        <button class="nav-btn btn-back" onclick="goToStep(3)">← Back</button>
+                        <button class="nav-btn btn-next" onclick="placeOrder()">🛒 Place Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Success Message -->
         <div class="success-message" id="successMessage">
-            <h2>✅ Order Placed Successfully!</h2>
+            <div class="success-icon">✅</div>
+            <h2>Order Placed Successfully!</h2>
             <p>Your order number is:</p>
             <div class="order-number" id="orderNumber">#001</div>
-            <p>Total: <span id="finalTotal">€0.00</span></p>
-            <p style="margin-top: 10px;">We'll start preparing your order right away!</p>
-            <p style="font-size: 14px;">Estimated time: 10-15 minutes</p>
-            <button type="button" class="new-order-btn" id="newOrderBtn">Place Another Order</button>
+            <p style="font-size: 20px; color: #666;">Total: <span id="finalTotal">€0.00</span></p>
+            <p style="margin-top: 20px; color: #666;">We'll start preparing your order right away!</p>
+            <p style="font-size: 14px; color: #999;">Estimated time: 10-15 minutes</p>
+            <button class="new-order-btn" onclick="resetOrder()">Place Another Order</button>
         </div>
     </div>
 
@@ -598,7 +690,6 @@
         import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
 
         // Firebase Configuration
-        // TODO: Replace with YOUR Firebase config
         const firebaseConfig = {
              apiKey: "AIzaSyCzVGmXLNfU4_jVV9kooB_l2jSh4bKzZE0",
   authDomain: "bobo-sandwich.firebaseapp.com",
@@ -613,27 +704,140 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Calculate total price
+        // Product data with images (using uploaded images as base64 would be too long, so using data attributes)
+        const sandwiches = [
+            { id: 'steak', name: 'Steak & Cheese', price: 8.00, image: 'Gemini_Generated_Image_bu961hbu961hbu96.png' },
+            { id: 'italian', name: 'Italian BMT', price: 7.50, image: 'Gemini_Generated_Image_ymhjr8ymhjr8ymhj.png' },
+            { id: 'chicken', name: 'Chicken Caesar', price: 7.50, image: 'Gemini_Generated_Image_wof5kkwof5kkwof5.png' },
+            { id: 'italian2', name: 'Italian Special', price: 7.50, image: 'Gemini_Generated_Image_241sx1241sx1241s.png' },
+            { id: 'turkey', name: 'Turkey Delight', price: 7.00, image: 'Gemini_Generated_Image_lo53hxlo53hxlo53.png' },
+            { id: 'veggie', name: 'Veggie Supreme', price: 6.00, image: 'Gemini_Generated_Image_rwwzgrwwzgrwwzgr.png' }
+        ];
+
+        const drinks = [
+            { id: 'fanta', name: 'Fanta', price: 2.50, image: 'Gemini_Generated_Image_tqffi1tqffi1tqff.png' },
+            { id: 'coke', name: 'Coca Cola', price: 2.50, image: 'Gemini_Generated_Image_8x0q1j8x0q1j8x0q.png' },
+            { id: 'oasis', name: 'Oasis', price: 2.50, image: 'Gemini_Generated_Image_xvkqqyxvkqqyxvkq.png' },
+            { id: 'water', name: 'Water', price: 1.50, image: 'Gemini_Generated_Image_rergq5rergq5rerg.png' },
+            { id: 'pepsi', name: 'Pepsi', price: 2.50, image: 'Gemini_Generated_Image_p72dlyp72dlyp72d.png' }
+        ];
+
+        // Order state
+        let orderState = {
+            sandwiches: {},
+            drinks: {},
+            sizeUpgrade: 0,
+            extras: {}
+        };
+
+        // Initialize product grids
+        function initProducts() {
+            // Sandwiches
+            const sandwichGrid = document.getElementById('sandwichGrid');
+            sandwiches.forEach(sandwich => {
+                sandwichGrid.innerHTML += createProductCard(sandwich, 'sandwich');
+            });
+
+            // Drinks
+            const drinksGrid = document.getElementById('drinksGrid');
+            drinks.forEach(drink => {
+                drinksGrid.innerHTML += createProductCard(drink, 'drink');
+            });
+        }
+
+        // Create product card HTML
+        function createProductCard(product, type) {
+            // Note: In production, you'd upload these images to your server or use proper image URLs
+            // For now, I'll use a placeholder. You'll need to upload the images to your GitHub repo
+            return `
+                <div class="product-card" id="${type}-${product.id}" data-type="${type}" data-id="${product.id}" data-price="${product.price}">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect fill='%23ddd' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23999'%3E${product.name}%3C/text%3E%3C/svg%3E" 
+                         class="product-image" 
+                         alt="${product.name}"
+                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'200\\' height=\\'200\\'%3E%3Crect fill=\\'%23ddd\\' width=\\'200\\' height=\\'200\\'/%3E%3C/svg%3E'">
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-price">€${product.price.toFixed(2)}</div>
+                    <div class="quantity-selector">
+                        <button class="qty-btn" onclick="changeQuantity('${type}', '${product.id}', -1, ${product.price})">−</button>
+                        <span class="qty-display" id="qty-${type}-${product.id}">0</span>
+                        <button class="qty-btn" onclick="changeQuantity('${type}', '${product.id}', 1, ${product.price})">+</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Change quantity
+        window.changeQuantity = function(type, id, change, price) {
+            const key = `${type}-${id}`;
+            const qtyElement = document.getElementById(`qty-${key}`);
+            const card = document.getElementById(key);
+            
+            let currentQty = parseInt(qtyElement.textContent);
+            let newQty = Math.max(0, currentQty + change);
+            
+            qtyElement.textContent = newQty;
+            
+            if (type === 'sandwich') {
+                orderState.sandwiches[id] = { qty: newQty, price: price };
+            } else if (type === 'drink') {
+                orderState.drinks[id] = { qty: newQty, price: price };
+            }
+            
+            // Update card appearance
+            if (newQty > 0) {
+                card.classList.add('selected');
+                if (!card.querySelector('.selected-badge')) {
+                    card.innerHTML += `<div class="selected-badge">×${newQty}</div>`;
+                } else {
+                    card.querySelector('.selected-badge').textContent = `×${newQty}`;
+                }
+            } else {
+                card.classList.remove('selected');
+                const badge = card.querySelector('.selected-badge');
+                if (badge) badge.remove();
+            }
+            
+            calculateTotal();
+        };
+
+        // Calculate total
         window.calculateTotal = function() {
             let total = 0;
+            let summaryHTML = '';
 
-            // Sandwich price
-            const sandwich = document.getElementById('sandwichType');
-            const sandwichPrice = parseFloat(sandwich.options[sandwich.selectedIndex]?.dataset.price || 0);
-            total += sandwichPrice;
-            document.getElementById('priceSandwich').textContent = '€' + sandwichPrice.toFixed(2);
+            // Sandwiches
+            let sandwichTotal = 0;
+            for (let id in orderState.sandwiches) {
+                const item = orderState.sandwiches[id];
+                if (item.qty > 0) {
+                    sandwichTotal += item.price * item.qty;
+                }
+            }
+            if (sandwichTotal > 0) {
+                summaryHTML += `<div class="price-row"><span>Sandwiches:</span><span>€${sandwichTotal.toFixed(2)}</span></div>`;
+                total += sandwichTotal;
+            }
+
+            // Drinks
+            let drinkTotal = 0;
+            for (let id in orderState.drinks) {
+                const item = orderState.drinks[id];
+                if (item.qty > 0) {
+                    drinkTotal += item.price * item.qty;
+                }
+            }
+            if (drinkTotal > 0) {
+                summaryHTML += `<div class="price-row"><span>Drinks:</span><span>€${drinkTotal.toFixed(2)}</span></div>`;
+                total += drinkTotal;
+            }
 
             // Size upgrade
             const sizeRadio = document.querySelector('input[name="sandwichSize"]:checked');
             const sizePrice = parseFloat(sizeRadio?.dataset.price || 0);
-            total += sizePrice;
-            document.getElementById('priceSize').textContent = '€' + sizePrice.toFixed(2);
-
-            // Drink
-            const drink = document.getElementById('drinkType');
-            const drinkPrice = parseFloat(drink.options[drink.selectedIndex]?.dataset.price || 0);
-            total += drinkPrice;
-            document.getElementById('priceDrink').textContent = '€' + drinkPrice.toFixed(2);
+            if (sizePrice > 0) {
+                summaryHTML += `<div class="price-row"><span>Size Upgrade:</span><span>€${sizePrice.toFixed(2)}</span></div>`;
+                total += sizePrice;
+            }
 
             // Cookies
             let cookiesTotal = 0;
@@ -642,8 +846,10 @@
                     cookiesTotal += parseFloat(checkbox.dataset.price);
                 }
             });
-            total += cookiesTotal;
-            document.getElementById('priceCookies').textContent = '€' + cookiesTotal.toFixed(2);
+            if (cookiesTotal > 0) {
+                summaryHTML += `<div class="price-row"><span>Cookies:</span><span>€${cookiesTotal.toFixed(2)}</span></div>`;
+                total += cookiesTotal;
+            }
 
             // Hot Sides
             let sidesTotal = 0;
@@ -652,99 +858,123 @@
                     sidesTotal += parseFloat(checkbox.dataset.price);
                 }
             });
-            total += sidesTotal;
-            document.getElementById('priceSides').textContent = '€' + sidesTotal.toFixed(2);
+            if (sidesTotal > 0) {
+                summaryHTML += `<div class="price-row"><span>Hot Sides:</span><span>€${sidesTotal.toFixed(2)}</span></div>`;
+                total += sidesTotal;
+            }
 
-            // Total
+            document.getElementById('orderSummaryDetails').innerHTML = summaryHTML;
             document.getElementById('priceTotal').textContent = '€' + total.toFixed(2);
         };
 
-        // Place order function
-        async function placeOrder() {
-            // Get form values
+        // Navigate between steps
+        window.goToStep = function(stepNumber) {
+            // Hide all sections
+            document.querySelectorAll('.order-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show current section
+            document.getElementById(`step${stepNumber}`).classList.add('active');
+            
+            // Update step indicators
+            for (let i = 1; i <= 4; i++) {
+                const indicator = document.getElementById(`step${i}Indicator`);
+                if (i === stepNumber) {
+                    indicator.classList.add('active');
+                } else {
+                    indicator.classList.remove('active');
+                }
+            }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Recalculate if going to step 4
+            if (stepNumber === 4) {
+                calculateTotal();
+            }
+        };
+
+        // Place order
+        window.placeOrder = async function() {
             const customerName = document.getElementById('customerName').value.trim();
             const phoneNumber = document.getElementById('phoneNumber').value.trim();
             const address = document.getElementById('address').value.trim();
-            const sandwichType = document.getElementById('sandwichType').value;
-            const sandwichSize = document.querySelector('input[name="sandwichSize"]:checked').value;
             const breadType = document.getElementById('breadType').value;
             const specialInstructions = document.getElementById('specialInstructions').value.trim();
 
-            // Validate required fields
+            // Validation
             if (!customerName) {
                 alert('⚠️ Please enter your name!');
-                document.getElementById('customerName').focus();
                 return;
             }
 
             if (!phoneNumber) {
                 alert('⚠️ Please enter your phone number!');
-                document.getElementById('phoneNumber').focus();
                 return;
             }
 
-            if (!sandwichType) {
-                alert('⚠️ Please select a sandwich!');
-                document.getElementById('sandwichType').focus();
+            // Check if at least one sandwich selected
+            let hasSandwich = false;
+            for (let id in orderState.sandwiches) {
+                if (orderState.sandwiches[id].qty > 0) {
+                    hasSandwich = true;
+                    break;
+                }
+            }
+
+            if (!hasSandwich) {
+                alert('⚠️ Please select at least one sandwich!');
+                goToStep(1);
                 return;
             }
 
             if (!breadType) {
                 alert('⚠️ Please select bread type!');
-                document.getElementById('breadType').focus();
+                goToStep(3);
                 return;
             }
 
-            // Get selected toppings
+            // Collect order data
+            const sandwichSize = document.querySelector('input[name="sandwichSize"]:checked').value;
+            
             const toppings = [];
             document.querySelectorAll('#lettuce, #tomato, #onion, #cucumber, #peppers, #olives, #pickles, #cheese').forEach(checkbox => {
                 if (checkbox.checked) toppings.push(checkbox.value);
             });
 
-            // Get selected sauces
             const sauces = [];
             document.querySelectorAll('#sauceBBQ, #sauceSouthwest, #sauceMayo, #sauceGarlic, #sauceKetchup, #sauceSpicy').forEach(checkbox => {
                 if (checkbox.checked) sauces.push(checkbox.value);
             });
 
-            // Get drink
-            const drinkType = document.getElementById('drinkType').value || 'None';
-
-            // Get cookies
             const cookies = [];
             document.querySelectorAll('#cookieChoc, #cookieDouble, #cookieWhite, #cookieRainbow').forEach(checkbox => {
                 if (checkbox.checked) cookies.push(checkbox.value);
             });
 
-            // Get hot sides
             const hotSides = [];
             document.querySelectorAll('#sideHashbrown, #sideFries, #slideGarlic, #slidePepperoni').forEach(checkbox => {
                 if (checkbox.checked) hotSides.push(checkbox.value);
             });
 
-            // Get total price
             const totalPrice = document.getElementById('priceTotal').textContent;
 
-            // Show loading
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('placeOrderBtn').disabled = true;
-
             try {
-                // Generate order number
                 const orderNumber = 'BO-' + Date.now().toString().slice(-6);
 
-                // Create order in Firestore
                 await addDoc(collection(db, 'orders'), {
                     orderNumber: orderNumber,
                     customerName: customerName,
                     phoneNumber: phoneNumber,
                     address: address || 'Pickup in store',
-                    sandwichType: sandwichType,
+                    sandwiches: orderState.sandwiches,
+                    drinks: orderState.drinks,
                     sandwichSize: sandwichSize,
                     breadType: breadType,
                     toppings: toppings,
                     sauces: sauces,
-                    drink: drinkType,
                     cookies: cookies,
                     hotSides: hotSides,
                     specialInstructions: specialInstructions || 'None',
@@ -754,11 +984,7 @@
                     updatedAt: serverTimestamp()
                 });
 
-                // Hide loading
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('placeOrderBtn').disabled = false;
-
-                // Show success message
+                // Show success
                 document.getElementById('orderForm').style.display = 'none';
                 document.getElementById('successMessage').classList.add('show');
                 document.getElementById('orderNumber').textContent = orderNumber;
@@ -766,44 +992,17 @@
 
             } catch (error) {
                 console.error('Error placing order:', error);
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('placeOrderBtn').disabled = false;
                 alert('❌ Error placing order: ' + error.message);
             }
-        }
+        };
 
-        // Reset form for new order
-        function resetForm() {
-            // Reset all form fields
-            document.getElementById('customerName').value = '';
-            document.getElementById('phoneNumber').value = '';
-            document.getElementById('address').value = '';
-            document.getElementById('sandwichType').value = '';
-            document.getElementById('breadType').value = '';
-            document.getElementById('drinkType').value = '';
-            document.getElementById('specialInstructions').value = '';
-            
-            // Reset size to 6 inch
-            document.getElementById('size6').checked = true;
-            
-            // Uncheck all checkboxes
-            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                checkbox.checked = false;
-            });
+        // Reset order
+        window.resetOrder = function() {
+            location.reload();
+        };
 
-            // Reset price
-            calculateTotal();
-
-            // Show form, hide success message
-            document.getElementById('orderForm').style.display = 'block';
-            document.getElementById('successMessage').classList.remove('show');
-        }
-
-        // Add event listeners
-        document.getElementById('placeOrderBtn').addEventListener('click', placeOrder);
-        document.getElementById('newOrderBtn').addEventListener('click', resetForm);
-
-        // Initialize price on load
+        // Initialize on load
+        initProducts();
         calculateTotal();
     </script>
 </body>
