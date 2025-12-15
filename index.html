@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoBo Sandwich - Order Now</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FF6B6B 0%, #FFE66D 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            font-size: 48px;
+            color: #FF6B6B;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .logo p {
+            color: #666;
+            font-size: 16px;
+            font-style: italic;
+        }
+        
+        .order-form {
+            margin-top: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            transition: border 0.3s;
+        }
+        
+        input[type="text"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #FF6B6B;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        
+        .checkbox-item:hover {
+            background: #f0f0f0;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+        
+        .checkbox-item label {
+            margin: 0;
+            font-weight: normal;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #FF6B6B;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .success-message {
+            display: none;
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+            animation: slideIn 0.5s ease;
+        }
+        
+        .success-message.show {
+            display: block;
+        }
+        
+        .success-message h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .success-message p {
+            font-size: 16px;
+        }
+        
+        .order-number {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #FFE66D;
+        }
+        
+        .new-order-btn {
+            background: white;
+            color: #4CAF50;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        
+        .new-order-btn:hover {
+            background: #f0f0f0;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            color: #FF6B6B;
+            margin-top: 20px;
+        }
+        
+        .required {
+            color: #FF6B6B;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            .logo h1 {
+                font-size: 36px;
+            }
+            
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>🥪 BoBo Sandwich</h1>
+            <p>Fresh. Fast. Delicious.</p>
+        </div>
+        
+        <div class="order-form" id="orderForm">
+            <h2 style="color: #333; margin-bottom: 20px;">Place Your Order</h2>
+            
+            <div class="form-group">
+                <label>Your Name <span class="required">*</span></label>
+                <input type="text" id="customerName" placeholder="Enter your name" required maxlength="50">
+            </div>
+            
+            <div class="form-group">
+                <label>Choose Your Sandwich <span class="required">*</span></label>
+                <select id="sandwichType" required>
+                    <option value="">-- Select Sandwich --</option>
+                    <option value="Classic Club">🥖 Classic Club - €6.50</option>
+                    <option value="Turkey Delight">🦃 Turkey Delight - €7.00</option>
+                    <option value="Veggie Supreme">🥗 Veggie Supreme - €6.00</option>
+                    <option value="Chicken Caesar">🐔 Chicken Caesar - €7.50</option>
+                    <option value="Tuna Melt">🐟 Tuna Melt - €6.50</option>
+                    <option value="BLT Special">🥓 BLT Special - €6.50</option>
+                    <option value="Italian BMT">🇮🇹 Italian BMT - €7.50</option>
+                    <option value="Steak & Cheese">🥩 Steak & Cheese - €8.00</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Choose Your Bread <span class="required">*</span></label>
+                <select id="breadType" required>
+                    <option value="">-- Select Bread --</option>
+                    <option value="White">White Bread</option>
+                    <option value="Wheat">Wheat Bread</option>
+                    <option value="Multigrain">Multigrain</option>
+                    <option value="Wrap">Tortilla Wrap</option>
+                    <option value="Ciabatta">Ciabatta Roll</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Select Toppings (Optional)</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="lettuce" value="Lettuce">
+                        <label for="lettuce">🥬 Lettuce</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="tomato" value="Tomato">
+                        <label for="tomato">🍅 Tomato</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="onion" value="Onion">
+                        <label for="onion">🧅 Onion</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cucumber" value="Cucumber">
+                        <label for="cucumber">🥒 Cucumber</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="peppers" value="Peppers">
+                        <label for="peppers">🫑 Peppers</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="olives" value="Olives">
+                        <label for="olives">🫒 Olives</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="pickles" value="Pickles">
+                        <label for="pickles">🥒 Pickles</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cheese" value="Cheese">
+                        <label for="cheese">🧀 Cheese</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Special Instructions (Optional)</label>
+                <textarea id="specialInstructions" placeholder="Any special requests? (e.g., no mayo, extra cheese, toasted...)"></textarea>
+            </div>
+            
+            <button class="submit-btn" onclick="placeOrder()">🛒 Place Order</button>
+            
+            <div class="loading" id="loading">
+                <p>⏳ Placing your order...</p>
+            </div>
+        </div>
+        
+        <div class="success-message" id="successMessage">
+            <h2>✅ Order Placed Successfully!</h2>
+            <p>Your order number is:</p>
+            <div class="order-number" id="orderNumber">#001</div>
+            <p>We'll start preparing your sandwich right away!</p>
+            <p style="margin-top: 10px; font-size: 14px;">Estimated time: 10-15 minutes</p>
+            <button class="new-order-btn" onclick="resetForm()">Place Another Order</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK v11 (Modular) -->
+    <script type="module">
+        // Import Firebase tools
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
+        import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
+
+        // Firebase Configuration
+        // TODO: Replace with YOUR Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyCzVGmXLNfU4_jVV9kooB_l2jSh4bKzZE0",
+  authDomain: "bobo-sandwich.firebaseapp.com",
+  projectId: "bobo-sandwich",
+  storageBucket: "bobo-sandwich.firebasestorage.app",
+  messagingSenderId: "899016336634",
+  appId: "1:899016336634:web:86db062e4882e0176fd543",
+  measurementId: "G-1C2XBKMZ5B"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+        // Place order function
+        window.placeOrder = async function() {
+            // Get form values
+            const customerName = document.getElementById('customerName').value.trim();
+            const sandwichType = document.getElementById('sandwichType').value;
+            const breadType = document.getElementById('breadType').value;
+            const specialInstructions = document.getElementById('specialInstructions').value.trim();
+
+            // Validate required fields
+            if (!customerName) {
+                alert('⚠️ Please enter your name!');
+                document.getElementById('customerName').focus();
+                return;
+            }
+
+            if (!sandwichType) {
+                alert('⚠️ Please select a sandwich!');
+                document.getElementById('sandwichType').focus();
+                return;
+            }
+
+            if (!breadType) {
+                alert('⚠️ Please select bread type!');
+                document.getElementById('breadType').focus();
+                return;
+            }
+
+            // Get selected toppings
+            const toppings = [];
+            const checkboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked');
+            checkboxes.forEach(checkbox => {
+                toppings.push(checkbox.value);
+            });
+
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+
+            try {
+                // Generate order number
+                const orderNumber = 'BO-' + Date.now().toString().slice(-6);
+
+                // Create order in Firestore
+                await addDoc(collection(db, 'orders'), {
+                    orderNumber: orderNumber,
+                    customerName: customerName,
+                    sandwichType: sandwichType,
+                    breadType: breadType,
+                    toppings: toppings,
+                    specialInstructions: specialInstructions || 'None',
+                    status: 'New',
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp()
+                });
+
+                // Hide loading
+                document.getElementById('loading').style.display = 'none';
+
+                // Show success message
+                document.getElementById('orderForm').style.display = 'none';
+                document.getElementById('successMessage').classList.add('show');
+                document.getElementById('orderNumber').textContent = orderNumber;
+
+            } catch (error) {
+                console.error('Error placing order:', error);
+                document.getElementById('loading').style.display = 'none';
+                alert('❌ Error placing order: ' + error.message);
+            }
+        };
+
+        // Reset form for new order
+        window.resetForm = function() {
+            // Reset all form fields
+            document.getElementById('customerName').value = '';
+            document.getElementById('sandwichType').value = '';
+            document.getElementById('breadType').value = '';
+            document.getElementById('specialInstructions').value = '';
+            
+            // Uncheck all toppings
+            document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Show form, hide success message
+            document.getElementById('orderForm').style.display = 'block';
+            document.getElementById('successMessage').classList.remove('show');
+        };
+    </script>
+</body>
+</html>
