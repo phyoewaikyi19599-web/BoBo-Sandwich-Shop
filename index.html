@@ -677,7 +677,7 @@
             <button class="modal-close" id="closeCheckoutBtn">×</button>
             <div id="checkoutContent">
                 <h2 class="section-title">Checkout</h2>
-                <form class="checkout-form" id="checkoutForm">
+                <form id="checkoutForm">
                     <div class="form-group">
                         <label class="form-label">Your Name *</label>
                         <input type="text" class="form-input" id="customerName" required placeholder="Enter your name">
@@ -712,17 +712,26 @@
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js';
         import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js';
 
+        // REPLACE THIS WITH YOUR FIREBASE CONFIG
         const firebaseConfig = {
-            apiKey: "YOUR-API-KEY-HERE",
-            authDomain: "YOUR-PROJECT-ID.firebaseapp.com",
-            projectId: "YOUR-PROJECT-ID",
-            storageBucket: "YOUR-PROJECT-ID.firebasestorage.app",
-            messagingSenderId: "YOUR-MESSAGING-ID",
-            appId: "YOUR-APP-ID"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+             apiKey: "AIzaSyCzVGmXLNfU4_jVV9kooB_l2jSh4bKzZE0",
+  authDomain: "bobo-sandwich.firebaseapp.com",
+  projectId: "bobo-sandwich",
+  storageBucket: "bobo-sandwich.firebasestorage.app",
+  messagingSenderId: "899016336634",
+  appId: "1:899016336634:web:86db062e4882e0176fd543",
+  measurementId: "G-1C2XBKMZ5B"
+};
+     // Initialize Firebase
+        let app, db;
+        try {
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            console.log("✅ Firebase initialized successfully!");
+        } catch (error) {
+            console.error("❌ Firebase initialization error:", error);
+            alert("Firebase connection error. Please check your configuration.");
+        }
 
         const products = {
             sandwiches: [
@@ -1124,29 +1133,42 @@
         document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            console.log("🔄 Starting order submission...");
+            
             const customerName = document.getElementById('customerName').value.trim();
             const phoneNumber = document.getElementById('phoneNumber').value.trim();
             const address = document.getElementById('address').value.trim();
             const specialInstructions = document.getElementById('specialInstructions').value.trim();
             
+            if (!customerName || !phoneNumber) {
+                alert('Please fill in your name and phone number!');
+                return;
+            }
+            
             const total = cart.reduce((sum, item) => 
                 sum + (item.basePrice + (item.sizeExtra || 0)) * item.quantity, 0);
             
+            const orderNumber = 'BO-' + Date.now().toString().slice(-6);
+            
+            const orderData = {
+                orderNumber: orderNumber,
+                customerName: customerName,
+                phoneNumber: phoneNumber,
+                address: address || 'Pickup in store',
+                items: cart,
+                totalPrice: `€${total.toFixed(2)}`,
+                specialInstructions: specialInstructions || 'None',
+                status: 'New',
+                createdAt: serverTimestamp(),
+                updatedAt: serverTimestamp()
+            };
+            
+            console.log("📦 Order data prepared:", orderData);
+            
             try {
-                const orderNumber = 'BO-' + Date.now().toString().slice(-6);
-                
-                await addDoc(collection(db, 'orders'), {
-                    orderNumber: orderNumber,
-                    customerName: customerName,
-                    phoneNumber: phoneNumber,
-                    address: address || 'Pickup in store',
-                    items: cart,
-                    totalPrice: `€${total.toFixed(2)}`,
-                    specialInstructions: specialInstructions || 'None',
-                    status: 'New',
-                    createdAt: serverTimestamp(),
-                    updatedAt: serverTimestamp()
-                });
+                console.log("🔥 Attempting to save to Firestore...");
+                const docRef = await addDoc(collection(db, 'orders'), orderData);
+                console.log("✅ Order saved successfully! Document ID:", docRef.id);
                 
                 document.getElementById('checkoutContent').innerHTML = `
                     <div class="success-message">
@@ -1165,17 +1187,21 @@
                 updateCart();
                 
             } catch (error) {
-                console.error('Error placing order:', error);
-                alert('❌ Error placing order: ' + error.message);
+                console.error('❌ Firebase error:', error);
+                console.error('Error code:', error.code);
+                console.error('Error message:', error.message);
+                alert(`Error placing order: ${error.message}\n\nPlease check:\n1. Your Firebase configuration\n2. Firestore database is created\n3. Security rules allow writes`);
             }
         });
 
+        // Initialize on load
+        console.log("🚀 Initializing BoBo Sandwich app...");
         renderProducts('sandwiches', 'sandwichGrid');
         renderProducts('drinks', 'drinksGrid');
         renderProducts('sides', 'sidesGrid');
         renderProducts('cookies', 'cookiesGrid');
         updateCart();
+        console.log("✅ App initialized!");
     </script>
 </body>
 </html>
-EOF
